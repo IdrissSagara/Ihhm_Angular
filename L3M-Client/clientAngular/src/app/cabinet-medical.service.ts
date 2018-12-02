@@ -1,4 +1,3 @@
-// https://glitch.com/edit/#!/l3m-projet
 
 import { Adresse } from './dataInterfaces/adresse';
 import { InfirmierInterface } from './dataInterfaces/infirmier';
@@ -22,22 +21,23 @@ export class CabinetMedicalService {
     this._http = http;
   }
 
-  async getData( url: string ): Promise<CabinetInterface> {
+  async getData( url: string ): Promise<CabinetInterface>
+  {
     // get HTTP response as text
     const response = await this.http.get(url, { responseType: 'text' }).toPromise();
 
     // parse the response with DOMParser
     let parser = new DOMParser();
-    let doc = parser.parseFromString(response, "application/xml");
+    let doc = parser.parseFromString(response, 'application/xml');
 
     // if no doc, exit
-    if (!doc) return null;
+    if(!doc) return null;
 
     // default cabinet
     const cabinet: CabinetInterface = {
       infirmiers: [],
       patientsNonAffectés: [],
-      adresse: this.getAdressFrom( doc.querySelector( "cabinet" ) )
+      adresse: this.getAdressFrom( doc.querySelector( 'cabinet' ) )
     };
 
     // 1 - tableau des infirmiers
@@ -51,6 +51,7 @@ export class CabinetMedicalService {
       adresse : this.getAdressFrom(I),
       patients: []
     }) );
+
     // 2 tableau des patients
     const patientsXML  = Array.from( doc.querySelectorAll( "patients > patient" ) );
     const patients: PatientInterface[] = patientsXML.map( P => ({
@@ -60,7 +61,8 @@ export class CabinetMedicalService {
       numéroSécuritéSociale: P.querySelector("numéro").textContent,
       adresse: this.getAdressFrom( P )
     }) );
-// 3 Tableau des affectations à faire.
+
+    // 3 Tableau des affectations à faire.
     const affectations = patientsXML.map( (P, i) => {
       const visiteXML = P.querySelector( "visite[intervenant]" );
       let infirmier: InfirmierInterface = null;
@@ -78,7 +80,10 @@ export class CabinetMedicalService {
         cabinet.patientsNonAffectés.push( P );
       }
     });
+
+    // Return the cabinet
     return cabinet;
+
   }
 
   private getAdressFrom(root: Element): Adresse {

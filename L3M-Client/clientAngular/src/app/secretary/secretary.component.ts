@@ -8,7 +8,6 @@ import { CabinetInterface } from '../dataInterfaces/cabinet';
   styleUrls: ['./secretary.component.css']
 })
 export class SecretaryComponent implements OnInit {
-
   private _cms: CabinetInterface;
   public get cms(): CabinetInterface { return this._cms; }
 
