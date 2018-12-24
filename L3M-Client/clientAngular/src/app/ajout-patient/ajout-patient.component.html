@@ -1,6 +1,65 @@
-<form>
-  <div>
-    <label></label>
-    <input/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<form [formGroup]="myForm" class="full">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+  <div class="container-controles">
+  <mat-form-field class="full">
+    <input matInput placeholder="nom" formControlName="nom">
+    <mat-error *ngIf="nom.invalid && nom.touched">
+      Ce champ est obligatoire
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="full">
+    <input matInput placeholder="prenom" formControlName="prenom">
+    <mat-error *ngIf="prenom.invalid && prenom.touched">
+      Ce champ est obligatoire
+    </mat-error>
+  </mat-form-field>
+    <mat-form-field class="full">
+      <input matInput placeholder="ville" formControlName="ville">
+
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select #sexe placeholder="Sexe">
+        <mat-option value="H">Homme</mat-option>
+        <mat-option value="F">Femme</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [matDatepicker]="naissance" placeholder="Date de naissance">
+      <mat-datepicker-toggle matSuffix [for]="naissance"></mat-datepicker-toggle>
+      <mat-datepicker #naissance></mat-datepicker>
+    </mat-form-field>
   </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="container-controles">
+        <mat-form-field class="full">
+          <input type="number" matInput formControlName="numsecur"
+          placeholder="Numéro secuté sociale">
+        </mat-form-field>
+      <mat-form-field class="full">
+        <input type="number" matInput formControlName="numero"
+               placeholder="Numéro de téléphone">
+      </mat-form-field>
+      <mat-form-field class="full">
+        <input type="number" matInput formControlName="codePostal"
+               placeholder="Code postal">
+      </mat-form-field>
+        <mat-form-field class="full">
+          <input type="number" matInput formControlName="rue"
+                 placeholder="Rue">
+        </mat-form-field>
+        <mat-form-field class="full">
+          <input type="number" matInput formControlName="etage"
+                 placeholder="Etage">
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <button class="mat-raised-button"  [disabled]="myForm.invalid" color="primary" >
+    Ajouter un patient
+  </button>
 </form>
+

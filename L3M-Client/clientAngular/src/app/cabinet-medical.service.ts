@@ -1,7 +1,7 @@
 
 import { Adresse } from './dataInterfaces/adresse';
 import { InfirmierInterface } from './dataInterfaces/infirmier';
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CabinetInterface } from './dataInterfaces/cabinet';
 import { PatientInterface } from './dataInterfaces/patient';
@@ -11,6 +11,10 @@ import { sexeEnum } from './dataInterfaces/sexe';
   providedIn: 'root'
 })
 export class CabinetMedicalService {
+
+  update_pat = new EventEmitter<any>();
+  update_aff = new EventEmitter<any>();
+  update_desaff = new EventEmitter<any>();
 
   private _cabinet: CabinetInterface;
 
@@ -95,6 +99,39 @@ export class CabinetMedicalService {
       numéro      : (node = root.querySelector("adresse > numéro")    ) ? node.textContent                    : "",
       étage       : (node = root.querySelector("adresse > étage")     ) ? node.textContent                    : "",
     };
+  }
+  ajouter_patient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string) {
+
+    const current_adresse: Adresse = {
+      numéro : numero,
+      rue : rue,
+      codePostal : codePostal,
+      ville : ville,
+      étage : etage,
+    }
+
+    const current_pat: PatientInterface = {
+      prénom: prenom,
+      nom: nom,
+      sexe:  sexe === 'H' ? sexeEnum.M : sexeEnum.F,
+      numéroSécuritéSociale: numSec,
+      adresse: current_adresse
+    }
+
+
+    this.http.post("/addPatient", {
+      patientName: nom,
+      patientForname: prenom,
+      patientNumber: numSec,
+      patientSex: sexe === 'H' ? sexeEnum.M : sexeEnum.F,
+      patientBirthday: date,
+      patientFloor: etage,
+      patientStreetNumber: numero,
+      patientStreet: rue,
+      patientPostalCode: codePostal,
+      patientCity: ville
+    }).subscribe( response => {if (response) { this.update_pat.emit(current_pat); }});
+
   }
 
 }

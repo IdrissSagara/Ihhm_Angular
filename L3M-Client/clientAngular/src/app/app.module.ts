@@ -3,7 +3,14 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {MatMenuModule} from '@angular/material';
+import {
+  MatCardModule, MatChipsModule,
+  MatDatepickerModule, MatDialogModule,
+  MatFormFieldModule, MatGridListModule,
+  MatInputModule, MatListModule,
+  MatMenuModule, MatNativeDateModule,
+  MatSelectModule, MatTab, MatTabGroup, MatTableModule, MatTabsModule
+} from '@angular/material';
 import {MatIconModule} from '@angular/material';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -16,6 +23,7 @@ import { PatientsComponent } from './patients/patients.component';
 import { InfirmiersComponent } from './infirmiers/infirmiers.component';
 import { AjoutPatientComponent } from './ajout-patient/ajout-patient.component';
 import {routes} from './app.routing';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -29,14 +37,17 @@ import {routes} from './app.routing';
   imports: [
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    MatMenuModule,
-    MatIconModule,
+    BrowserAnimationsModule, MatGridListModule,
+    MatTableModule, MatCardModule, MatTabsModule, MatChipsModule,
+    NoopAnimationsModule, MatIconModule, MatListModule,
+    MatNativeDateModule, MatDialogModule, MatToolbarModule,
+    MatMenuModule, MatSelectModule, MatDatepickerModule,
+    MatIconModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatCheckboxModule, MatToolbarModule ,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule, ReactiveFormsModule,
   ],
-  exports: [MatButtonModule, MatCheckboxModule],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })
