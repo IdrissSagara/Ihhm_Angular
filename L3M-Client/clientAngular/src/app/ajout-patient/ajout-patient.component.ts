@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CabinetMedicalService} from "../cabinet-medical.service";
 
 @Component({
   selector: 'app-ajout-patient',
@@ -8,7 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class AjoutPatientComponent implements OnInit {
 myForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private cabinetService: CabinetMedicalService) { }
   ngOnInit() {
     this.myForm = this.fb.group({
       nom: ['', [
@@ -20,7 +21,7 @@ myForm: FormGroup;
       ville: ['', [
         Validators.required,
       ]],
-      numsecur: ['', [
+      numSecu: ['', [
         Validators.required,
       ]],
       numero: ['', [
@@ -36,6 +37,10 @@ myForm: FormGroup;
         Validators.required,
       ]],
     });
+  }
+  ajoutPatient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string){
+    this.cabinetService.ajouter_patient(nom, prenom, numSec, sexe, date, etage, numero, rue, codePostal, ville);
+    console.log("Ajout avec succes");
   }
   get nom() {
     return this.myForm.get('nom');

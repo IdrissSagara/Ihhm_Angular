@@ -5,19 +5,20 @@
     <mat-grid-tile>
   <div class="container-controles">
   <mat-form-field class="full">
-    <input matInput placeholder="nom" formControlName="nom">
+    <input matInput placeholder="nom" formControlName="nom" #nom>
     <mat-error *ngIf="nom.invalid && nom.touched">
       Ce champ est obligatoire
     </mat-error>
   </mat-form-field>
   <mat-form-field class="full">
-    <input matInput placeholder="prenom" formControlName="prenom">
+    <input matInput placeholder="prenom" formControlName="prenom" #prenom>
     <mat-error *ngIf="prenom.invalid && prenom.touched">
       Ce champ est obligatoire
     </mat-error>
   </mat-form-field>
     <mat-form-field class="full">
-      <input matInput placeholder="ville" formControlName="ville">
+      <input matInput placeholder="ville" formControlName="ville"
+      #ville>
 
     </mat-form-field>
     <mat-form-field>
@@ -36,30 +37,32 @@
     <mat-grid-tile>
       <div class="container-controles">
         <mat-form-field class="full">
-          <input type="number" matInput formControlName="numsecur"
-          placeholder="Numéro secuté sociale">
+          <input type="number" matInput formControlName="numSecu"
+          placeholder="Numéro secuté sociale" #numSecu>
         </mat-form-field>
       <mat-form-field class="full">
         <input type="number" matInput formControlName="numero"
-               placeholder="Numéro de téléphone">
+               placeholder="Numéro de téléphone" #Num>
       </mat-form-field>
       <mat-form-field class="full">
         <input type="number" matInput formControlName="codePostal"
-               placeholder="Code postal">
+               placeholder="Code postal" #CP>
       </mat-form-field>
         <mat-form-field class="full">
           <input type="number" matInput formControlName="rue"
-                 placeholder="Rue">
+                 placeholder="Rue" #Rue>
         </mat-form-field>
         <mat-form-field class="full">
           <input type="number" matInput formControlName="etage"
-                 placeholder="Etage">
+                 placeholder="Etage" #Etage>
         </mat-form-field>
       </div>
     </mat-grid-tile>
   </mat-grid-list>
-  <button class="mat-raised-button"  [disabled]="myForm.invalid" color="primary" >
-    Ajouter un patient
+  
+  <button mat-raised-button color="primary" value="ajouter" [disabled]="myForm.invalid"
+          (click)="ajoutPatient(nom.value,prenom.value,numSecu.value,sexe.value,naissance._datepickerInput.value,Etage.value,Num.value,Rue.value,CP.value,ville.value)">Ajouter
   </button>
+
 </form>
 
