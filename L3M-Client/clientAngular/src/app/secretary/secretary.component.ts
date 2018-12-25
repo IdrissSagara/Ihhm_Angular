@@ -8,12 +8,23 @@ import { CabinetInterface } from '../dataInterfaces/cabinet';
   styleUrls: ['./secretary.component.css']
 })
 export class SecretaryComponent implements OnInit {
-  private _cms: CabinetInterface;
+   _cms: CabinetInterface;
+  // sortOptions: infirmier[];
+
+  sortKey: string;
+
+  sortField: string;
+
+  sortOrder: number;
   public get cms(): CabinetInterface { return this._cms; }
 
   constructor(cabinetMedicalService: CabinetMedicalService ) {
 
     this.initCabinet(cabinetMedicalService);
+  }
+  selectCar($event, car) {
+    // event.first = First row offset
+    // event.rows = Number of rows per page
   }
 
   async initCabinet(cabinetMedicalService) {
@@ -22,7 +33,8 @@ export class SecretaryComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
-
+  image(nom: string) {
+    return 'data/' + nom;
+  }
 }

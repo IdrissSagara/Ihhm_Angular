@@ -49,7 +49,7 @@ export class CabinetMedicalService {
 
     cabinet.infirmiers = infirmiersXML.map( I => ({
       id      : I.getAttribute("id"),
-      prénom  : I.querySelector("prénom").textContent,
+      prenom  : I.querySelector("prénom").textContent,
       nom     : I.querySelector("nom"   ).textContent,
       photo   : I.querySelector("photo" ).textContent,
       adresse : this.getAdressFrom(I),

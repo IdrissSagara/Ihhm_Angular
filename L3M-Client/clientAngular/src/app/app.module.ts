@@ -24,6 +24,8 @@ import { InfirmiersComponent } from './infirmiers/infirmiers.component';
 import { AjoutPatientComponent } from './ajout-patient/ajout-patient.component';
 import {routes} from './app.routing';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {DataViewModule} from 'primeng/dataview';
+import {Panel, PanelModule} from "primeng/panel";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatButtonModule, MatCheckboxModule, MatToolbarModule ,
     RouterModule.forRoot(routes),
     FormsModule, ReactiveFormsModule,
+    DataViewModule,PanelModule
   ],
   exports: [],
   providers: [],

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CabinetMedicalService} from "../cabinet-medical.service";
+import {CabinetMedicalService} from '../cabinet-medical.service';
 
 @Component({
   selector: 'app-ajout-patient',
