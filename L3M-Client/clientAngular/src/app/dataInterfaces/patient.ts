@@ -2,9 +2,9 @@ import {sexeEnum} from "./sexe";
 import {Adresse} from "./adresse";
 
 export interface PatientInterface {
-  prénom: string;
+  prenom: string;
   nom: string;
   sexe: sexeEnum;
-  numéroSécuritéSociale: string;
+  numeroSecuriteSociale: string;
   adresse: Adresse;
 }

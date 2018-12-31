@@ -26,6 +26,7 @@ import {routes} from './app.routing';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DataViewModule} from 'primeng/dataview';
 import {Panel, PanelModule} from "primeng/panel";
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {Panel, PanelModule} from "primeng/panel";
     CabinetComponent,
     PatientsComponent,
     InfirmiersComponent,
-    AjoutPatientComponent
+    AjoutPatientComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,7 @@ import {Panel, PanelModule} from "primeng/panel";
     MatButtonModule, MatCheckboxModule, MatToolbarModule ,
     RouterModule.forRoot(routes),
     FormsModule, ReactiveFormsModule,
-    DataViewModule,PanelModule
+    DataViewModule, PanelModule
   ],
   exports: [],
   providers: [],

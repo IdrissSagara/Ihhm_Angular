@@ -59,10 +59,10 @@ export class CabinetMedicalService {
     // 2 tableau des patients
     const patientsXML  = Array.from( doc.querySelectorAll( "patients > patient" ) );
     const patients: PatientInterface[] = patientsXML.map( P => ({
-      prénom: P.querySelector("prénom").textContent,
+      prenom: P.querySelector("prénom").textContent,
       nom: P.querySelector("nom").textContent,
       sexe: P.querySelector("sexe").textContent === "M" ? sexeEnum.M : sexeEnum.F,
-      numéroSécuritéSociale: P.querySelector("numéro").textContent,
+      numeroSecuriteSociale: P.querySelector("numéro").textContent,
       adresse: this.getAdressFrom( P )
     }) );
 
@@ -96,25 +96,25 @@ export class CabinetMedicalService {
       ville       : (node = root.querySelector("adresse > ville")     ) ? node.textContent                    : "",
       codePostal  : (node = root.querySelector("adresse > codePostal")) ? parseInt(node.textContent, 10) : 0,
       rue         : (node = root.querySelector("adresse > rue")       ) ? node.textContent                    : "",
-      numéro      : (node = root.querySelector("adresse > numéro")    ) ? node.textContent                    : "",
-      étage       : (node = root.querySelector("adresse > étage")     ) ? node.textContent                    : "",
+      numero      : (node = root.querySelector("adresse > numéro")    ) ? node.textContent                    : "",
+      etage       : (node = root.querySelector("adresse > étage")     ) ? node.textContent                    : "",
     };
   }
   ajouter_patient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string) {
 
     const current_adresse: Adresse = {
-      numéro : numero,
+      numero : numero,
       rue : rue,
       codePostal : codePostal,
       ville : ville,
-      étage : etage,
+      etage : etage,
     }
 
     const current_pat: PatientInterface = {
-      prénom: prenom,
+      prenom: prenom,
       nom: nom,
       sexe:  sexe === 'H' ? sexeEnum.M : sexeEnum.F,
-      numéroSécuritéSociale: numSec,
+      numeroSecuriteSociale: numSec,
       adresse: current_adresse
     }
 
@@ -131,6 +131,23 @@ export class CabinetMedicalService {
       patientPostalCode: codePostal,
       patientCity: ville
     }).subscribe( response => {if (response) { this.update_pat.emit(current_pat); }});
+
+  }
+  affecter_patient(id: string, pat: PatientInterface) {
+    console.log(id);
+    console.log(pat.numeroSecuriteSociale);
+    this.http.post("/affectation", {
+      infirmier: id,
+      patient: pat.numeroSecuriteSociale
+    }).subscribe( response => {if (response) { this.update_aff.emit({p: pat, id: id} ); }} );
+  }
+
+  desaffecter_patient(pat: PatientInterface, id) {
+    console.log(pat.numeroSecuriteSociale);
+    this.http.post("/affectation", {
+      infirmier:"none",
+      patient: pat.numeroSecuriteSociale
+    }).subscribe( response => {if (response) { this.update_desaff.emit({p: pat, id: id}) ; }} );
 
   }
 
