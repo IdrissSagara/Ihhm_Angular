@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { CabinetInterface } from './dataInterfaces/cabinet';
 import { PatientInterface } from './dataInterfaces/patient';
 import { sexeEnum } from './dataInterfaces/sexe';
-
+import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +21,7 @@ export class CabinetMedicalService {
   private _http: HttpClient;
   public get http(): HttpClient { return this._http; }
 
-  constructor( http: HttpClient ) {
+  constructor( http: HttpClient, private toastr: ToastrService) {
     this._http = http;
   }
 
@@ -131,8 +131,7 @@ export class CabinetMedicalService {
 
   }
   affecter_patient(id: string, pat: PatientInterface) {
-    console.log(id);
-    console.log(pat.numeroSecuriteSociale);
+    this.toastr.success(`à été affecter avec succes`, `${pat.nom} ${pat.prenom}`);
     this.http.post("/affectation", {
       infirmier: id,
       patient: pat.numeroSecuriteSociale
@@ -140,11 +139,13 @@ export class CabinetMedicalService {
   }
 
   desaffecter_patient(pat: PatientInterface, id) {
-    console.log(pat.numeroSecuriteSociale);
+    this.toastr.success('à été désaffecter avec succes', `${pat.nom} ${pat.prenom}`);
     this.http.post("/affectation", {
       infirmier:"none",
       patient: pat.numeroSecuriteSociale
-    }).subscribe( response => {if (response) { this.update_desaff.emit({p: pat, id: id}) ; }} );
+    }).subscribe( response => {if (response) {
+
+      this.update_desaff.emit({p: pat, id: id}) ; }} );
 
   }
 

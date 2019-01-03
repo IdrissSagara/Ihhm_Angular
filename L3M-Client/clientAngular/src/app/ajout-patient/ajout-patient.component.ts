@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CabinetMedicalService} from '../cabinet-medical.service';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-ajout-patient',
@@ -9,7 +10,8 @@ import {CabinetMedicalService} from '../cabinet-medical.service';
 })
 export class AjoutPatientComponent implements OnInit {
 myForm: FormGroup;
-  constructor(private fb: FormBuilder, private cabinetService: CabinetMedicalService) { }
+  constructor(private fb: FormBuilder, private cabinetService: CabinetMedicalService,
+              private toastr: ToastrService) { }
   ngOnInit() {
     this.myForm = this.fb.group({
       nom: ['', [
@@ -40,6 +42,7 @@ myForm: FormGroup;
   }
   ajoutPatient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string){
     this.cabinetService.ajouter_patient(nom, prenom, numSec, sexe, date, etage, numero, rue, codePostal, ville);
+    this.toastr.success('à été crée avec succès', 'Le patient')
     console.log("Ajout avec succes");
   }
   get nom() {

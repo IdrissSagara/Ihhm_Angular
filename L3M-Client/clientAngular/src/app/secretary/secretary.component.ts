@@ -22,7 +22,7 @@ export class SecretaryComponent implements OnInit {
   sortOrder: number;
   public get cms(): CabinetInterface { return this._cms; }
 
-  constructor(private cabinetMedicalService: CabinetMedicalService ) {
+  constructor(private cabinetMedicalService: CabinetMedicalService) {
 
     this.initCabinet(cabinetMedicalService);
   }

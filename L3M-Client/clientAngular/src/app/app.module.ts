@@ -27,6 +27,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DataViewModule} from 'primeng/dataview';
 import {Panel, PanelModule} from "primeng/panel";
 import { HomeComponent } from './home/home.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { HomeComponent } from './home/home.component';
     FormsModule, ReactiveFormsModule,
     DataViewModule, PanelModule,
     RouterModule.forRoot(routes),
+    ToastrModule.forRoot(),
   ],
   exports: [],
   providers: [],
