@@ -48,9 +48,9 @@ import { HomeComponent } from './home/home.component';
     MatMenuModule, MatSelectModule, MatDatepickerModule,
     MatIconModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatCheckboxModule, MatToolbarModule ,
-    RouterModule.forRoot(routes),
     FormsModule, ReactiveFormsModule,
-    DataViewModule, PanelModule
+    DataViewModule, PanelModule,
+    RouterModule.forRoot(routes),
   ],
   exports: [],
   providers: [],

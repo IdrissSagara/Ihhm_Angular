@@ -10,22 +10,46 @@ import {sexeEnum} from "../dataInterfaces/sexe";
   styleUrls: ['./patients.component.css']
 })
 export class PatientsComponent implements OnInit {
-  all: PatientInterface;
+
+  @Input() patient: PatientInterface;
   @Input() infirmiers;
   @Input() cabinetService;
-  constructor(private cabinetMedicalService: CabinetMedicalService) {
+  selectedValue: string;
+  private enumM = sexeEnum.M;
 
-    this.initCabinet(cabinetMedicalService);
+  constructor(private cabinetMedicalService: CabinetMedicalService)  {
   }
-  protected enumM = sexeEnum.F;
-  affecter(id: string) {
-    this.cabinetService.affecter_patient(id, this.all);
+
+  getNom() {
+    return this.patient.nom;
   }
+
+  getPrenom() {
+    return this.patient.prenom;
+  }
+
+  getSexe() {
+    return this.patient.sexe;
+  }
+
+  getNum() {
+    return this.patient.numeroSecuriteSociale;
+  }
+
+  getAdresse() {
+    return this.patient.adresse.numero + " " + this.patient.adresse.rue + " " + this.patient.adresse.ville + " " + this.patient.adresse.codePostal;
+  }
+
+
+
+
+
+  service_affecter(id: string){
+    this.cabinetMedicalService.affecter_patient(id, this.patient);
+  }
+
   ngOnInit() {
   }
-  async initCabinet(cabinetMedicalService) {
-    this.all = await cabinetMedicalService.getData('/data/cabinetInfirmier.xml');
-    console.log( this.all  );
-  }
+
 
 }

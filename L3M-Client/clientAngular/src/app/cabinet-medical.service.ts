@@ -40,7 +40,7 @@ export class CabinetMedicalService {
     // default cabinet
     const cabinet: CabinetInterface = {
       infirmiers: [],
-      patientsNonAffectés: [],
+      patientsNonAffectes: [],
       adresse: this.getAdressFrom( doc.querySelector( 'cabinet' ) )
     };
 
@@ -77,12 +77,9 @@ export class CabinetMedicalService {
     } );
 
     // 4 Réaliser les affectations
-    affectations.forEach( ({patient: P, infirmier: I}) => {
-      if (I !== null) {
-        I.patients.push( P );
-      } else {
-        cabinet.patientsNonAffectés.push( P );
-      }
+    affectations.forEach(({patient : P , infirmier : I }) => {
+      if(I!= null) I.patients.push (P);
+      else cabinet.patientsNonAffectes.push(P);
     });
 
     // Return the cabinet
@@ -150,5 +147,16 @@ export class CabinetMedicalService {
     }).subscribe( response => {if (response) { this.update_desaff.emit({p: pat, id: id}) ; }} );
 
   }
+
+  getEmitPat() {
+    return this.update_pat;
+  }
+  getEmitAff() {
+    return this.update_aff;
+  }
+  getEmitDesaff() {
+    return this.update_desaff;
+  }
+
 
 }
