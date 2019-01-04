@@ -28,6 +28,7 @@ import {DataViewModule} from 'primeng/dataview';
 import {Panel, PanelModule} from "primeng/panel";
 import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
+import {DataTableModule} from "primeng/primeng";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatIconModule, MatFormFieldModule, MatInputModule,
     MatButtonModule, MatCheckboxModule, MatToolbarModule ,
     FormsModule, ReactiveFormsModule,
-    DataViewModule, PanelModule,
+    DataViewModule, PanelModule, DataTableModule,
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
   ],

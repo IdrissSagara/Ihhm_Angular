@@ -4,13 +4,14 @@ import {AjoutPatientComponent} from "./ajout-patient/ajout-patient.component";
 import {InfirmiersComponent} from "./infirmiers/infirmiers.component";
 import {SecretaryComponent} from "./secretary/secretary.component";
 import {PatientsComponent} from "./patients/patients.component";
+import {CabinetComponent} from "./cabinet/cabinet.component";
 
 
 export const routes: Routes = [
   {path: 'ajout-patient', component: AjoutPatientComponent},
-  {path: 'infirmiers', component: InfirmiersComponent},
   {path: 'secretary', component: SecretaryComponent},
-  {path: 'patient', component: PatientsComponent},
+  {path: 'cabinet', component: CabinetComponent},
+
 ];
 export const routingModule: ModuleWithProviders = RouterModule.forRoot(routes);
 

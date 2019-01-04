@@ -133,7 +133,9 @@ export class CabinetMedicalService {
     this.http.post("/affectation", {
       infirmier: id,
       patient: pat.numeroSecuriteSociale
-    }).subscribe( response => {if (response) { this.update_aff.emit({p: pat, id: id} ); }} );
+    }).subscribe( response => {if (response) {
+      this.update_aff.emit({p: pat, id: id} );
+    }} );
   }
 
   desaffecter_patient(pat: PatientInterface, id) {
@@ -142,8 +144,15 @@ export class CabinetMedicalService {
       infirmier:"none",
       patient: pat.numeroSecuriteSociale
     }).subscribe( response => {if (response) {
-
       this.update_desaff.emit({p: pat, id: id}) ; }} );
 
   }
+  getEmitAff() {
+    return this.update_aff;
+  }
+  getEmitDesaff() {
+    return this.update_desaff;
+  }
+
+
 }
