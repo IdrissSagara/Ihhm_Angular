@@ -2,7 +2,7 @@
 import { Adresse } from './dataInterfaces/adresse';
 import { InfirmierInterface } from './dataInterfaces/infirmier';
 import {EventEmitter, Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import { CabinetInterface } from './dataInterfaces/cabinet';
 import { PatientInterface } from './dataInterfaces/patient';
 import { sexeEnum } from './dataInterfaces/sexe';
@@ -128,30 +128,28 @@ export class CabinetMedicalService {
     }).subscribe( response => {if (response) { this.update_pat.emit(current_pat); }});
 
   }
-  affecter_patient(id: string, pat: PatientInterface) {
-    this.toastr.success(`à été affecter avec succes`, `${pat.nom} ${pat.prenom}`);
-    this.http.post("/affectation", {
-      infirmier: id,
-      patient: pat.numeroSecuriteSociale
-    }).subscribe( response => {if (response) {
-      this.update_aff.emit({p: pat, id: id} );
-    }} );
-  }
 
-  desaffecter_patient(pat: PatientInterface, id) {
-    this.toastr.success('à été désaffecter avec succes', `${pat.nom} ${pat.prenom}`);
-    this.http.post("/affectation", {
-      infirmier:"none",
-      patient: pat.numeroSecuriteSociale
-    }).subscribe( response => {if (response) {
-      this.update_desaff.emit({p: pat, id: id}) ; }} );
+  public async desAffectation(patient: PatientInterface): Promise<PatientInterface> {
+    const res = await this.http.post('/affectation', {
+      infirmier: 'none',
+      patient: patient.numeroSecuriteSociale
+    }, {observe: 'response'}).toPromise<HttpResponse<any>>();
 
+    if (res.status === 200) {
+      return patient;
+    }
+    return null;
   }
-  getEmitAff() {
-    return this.update_aff;
-  }
-  getEmitDesaff() {
-    return this.update_desaff;
+  public async affectation(patient: PatientInterface, infirmierId: string): Promise<PatientInterface> {
+    const res = await this.http.post('/affectation', {
+      infirmier: infirmierId,
+      patient: patient.numeroSecuriteSociale
+    }, {observe: 'response'}).toPromise<HttpResponse<any>>();
+
+    if (res.status === 200) {
+      return patient;
+    }
+    return null;
   }
 
 

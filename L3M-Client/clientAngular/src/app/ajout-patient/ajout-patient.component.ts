@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CabinetMedicalService} from '../cabinet-medical.service';
 import {ToastrService} from "ngx-toastr";
+import {PatientInterface} from "../dataInterfaces/patient";
 
 @Component({
   selector: 'app-ajout-patient',
@@ -10,6 +11,8 @@ import {ToastrService} from "ngx-toastr";
 })
 export class AjoutPatientComponent implements OnInit {
 myForm: FormGroup;
+
+  @Output() addEvent: EventEmitter<any> = new EventEmitter();
   constructor(private fb: FormBuilder, private cabinetService: CabinetMedicalService,
               private toastr: ToastrService) { }
   ngOnInit() {
@@ -42,6 +45,7 @@ myForm: FormGroup;
   }
   ajoutPatient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string){
     this.cabinetService.ajouter_patient(nom, prenom, numSec, sexe, date, etage, numero, rue, codePostal, ville);
+    this.addEvent.emit();
     this.toastr.success('à été crée avec succès', 'Le patient')
     console.log("Ajout avec succes");
   }

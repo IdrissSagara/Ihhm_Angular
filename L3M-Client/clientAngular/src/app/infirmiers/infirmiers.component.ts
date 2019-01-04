@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PatientInterface} from "../dataInterfaces/patient";
 import {InfirmierInterface} from "../dataInterfaces/infirmier";
 import {CabinetMedicalService} from "../cabinet-medical.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-infirmiers',
@@ -13,7 +14,7 @@ export class InfirmiersComponent implements OnInit {
   @Input() cabinetService;
   @Output() Desaffecter: EventEmitter<PatientInterface> = new EventEmitter();
 
-  constructor(private cabinetMedicalService: CabinetMedicalService ) { }
+  constructor(private cabinetMedicalService: CabinetMedicalService, private toastr: ToastrService) { }
 
   getNom () {
     return this.infirmier.nom;
@@ -37,10 +38,22 @@ export class InfirmiersComponent implements OnInit {
   getPresenter(pat: PatientInterface) {
     return pat.prenom + " " + pat.nom;
   }
+  // service_desaffecter(pat: PatientInterface) {
+   // this.cabinetMedicalService.desaffecter_patient(pat, this.infirmier.id);
+   // this.Desaffecter.emit(pat);
+  // }
   service_desaffecter(pat: PatientInterface) {
-    this.cabinetMedicalService.desaffecter_patient(pat, this.infirmier.id);
-    this.Desaffecter.emit(pat);
+     this.cabinetMedicalService.desAffectation(pat).then(p => {
+      if (p !== null) {
+      this.Desaffecter.emit(p);
+      this.toastr.success('à été désaffecter avec succes', `${p.nom} ${p.prenom}`);
+    } else {
+        this.toastr.error("erreur lors de la désaffectation")
+    }
+    });
+
   }
+
   ngOnInit() {
   }
 

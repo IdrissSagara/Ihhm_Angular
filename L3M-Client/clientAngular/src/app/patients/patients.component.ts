@@ -4,6 +4,7 @@ import {CabinetInterface} from "../dataInterfaces/cabinet";
 import {CabinetMedicalService} from "../cabinet-medical.service";
 import {sexeEnum} from "../dataInterfaces/sexe";
 import {InfirmierInterface} from "../dataInterfaces/infirmier";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-patients',
@@ -20,7 +21,7 @@ export class PatientsComponent implements OnInit {
   selectedValue: string;
   private enumM = sexeEnum.M;
 
-  constructor(private cabinetMedicalService: CabinetMedicalService)  {
+  constructor(private cabinetMedicalService: CabinetMedicalService, private toastr: ToastrService)  {
   }
 
   getNom() {
@@ -45,8 +46,14 @@ export class PatientsComponent implements OnInit {
 
 
   service_affecter(id: string){
-    this.cabinetMedicalService.affecter_patient(id, this.patient);
-    this.affEmitter.emit(this.patient);
+    this.cabinetMedicalService.affectation(this.patient, id).then(p => {
+      if (p !== null) {
+        this.affEmitter.emit(this.patient);
+        this.toastr.success(`affecter avec succes`, `${p.prenom} ${p.nom}`);
+      } else {
+        this.toastr.error('erreur lors de l\'affectation');
+      }
+    });
   }
 
   ngOnInit() {
