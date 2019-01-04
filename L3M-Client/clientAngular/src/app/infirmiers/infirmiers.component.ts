@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PatientInterface} from "../dataInterfaces/patient";
 import {InfirmierInterface} from "../dataInterfaces/infirmier";
 import {CabinetMedicalService} from "../cabinet-medical.service";
@@ -11,6 +11,7 @@ import {CabinetMedicalService} from "../cabinet-medical.service";
 export class InfirmiersComponent implements OnInit {
   @Input() infirmier: InfirmierInterface;
   @Input() cabinetService;
+  @Output() Desaffecter: EventEmitter<PatientInterface> = new EventEmitter();
 
   constructor(private cabinetMedicalService: CabinetMedicalService ) { }
 
@@ -38,6 +39,7 @@ export class InfirmiersComponent implements OnInit {
   }
   service_desaffecter(pat: PatientInterface) {
     this.cabinetMedicalService.desaffecter_patient(pat, this.infirmier.id);
+    this.Desaffecter.emit(pat);
   }
   ngOnInit() {
   }

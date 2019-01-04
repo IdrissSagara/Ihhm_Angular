@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PatientInterface} from "../dataInterfaces/patient";
 import {CabinetInterface} from "../dataInterfaces/cabinet";
 import {CabinetMedicalService} from "../cabinet-medical.service";
 import {sexeEnum} from "../dataInterfaces/sexe";
+import {InfirmierInterface} from "../dataInterfaces/infirmier";
 
 @Component({
   selector: 'app-patients',
@@ -12,8 +13,10 @@ import {sexeEnum} from "../dataInterfaces/sexe";
 export class PatientsComponent implements OnInit {
 
   @Input() patient: PatientInterface;
-  @Input() infirmiers;
+  @Input() infirmiers: InfirmierInterface[];
   @Input() cabinetService;
+  @Output() affEmitter: EventEmitter<PatientInterface> = new EventEmitter();
+  @Output() desafEmitter: EventEmitter<PatientInterface> = new EventEmitter();
   selectedValue: string;
   private enumM = sexeEnum.M;
 
@@ -41,11 +44,9 @@ export class PatientsComponent implements OnInit {
   }
 
 
-
-
-
   service_affecter(id: string){
     this.cabinetMedicalService.affecter_patient(id, this.patient);
+    this.affEmitter.emit(this.patient);
   }
 
   ngOnInit() {

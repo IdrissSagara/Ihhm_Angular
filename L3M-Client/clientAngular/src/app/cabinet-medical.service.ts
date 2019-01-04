@@ -16,75 +16,73 @@ export class CabinetMedicalService {
   update_aff = new EventEmitter<any>();
   update_desaff = new EventEmitter<any>();
 
-  private _cabinet: CabinetInterface;
+  private cabinet: CabinetInterface;
+  private document: Document;
+  private domParser: DOMParser = new DOMParser();
 
-  private _http: HttpClient;
-  public get http(): HttpClient { return this._http; }
-
-  constructor( http: HttpClient, private toastr: ToastrService) {
-    this._http = http;
+  constructor(private http: HttpClient, private toastr: ToastrService) {
   }
 
-  async getData( url: string ): Promise<CabinetInterface>
-  {
-    // get HTTP response as text
-    const response = await this.http.get(url, { responseType: 'text' }).toPromise();
+  getData(url: string): Promise<CabinetInterface> {
+    return new Promise<CabinetInterface>(((resolve, reject) => {
+      this.http.get(url, {responseType: 'text'}).toPromise().then(
+        res => {
+          this.document = this.domParser.parseFromString(res, 'text/xml');
+          this.cabinet = {
+            infirmiers: [],
+            patientsNonAffectes: [],
+            adresse: this.getAdressFrom(this.document.querySelector('cabinet'))
+          };
 
-    // parse the response with DOMParser
-    let parser = new DOMParser();
-    let doc = parser.parseFromString(response, 'application/xml');
+          // 1 - tableau des infirmiers
+          const infirmiersXML = Array.from(this.document.querySelectorAll('infirmiers > infirmier'));
 
-    // if no doc, exit
-    if(!doc) return null;
+          this.cabinet.infirmiers = infirmiersXML.map(I => ({
+            id: I.getAttribute('id'),
+            prenom: I.querySelector('prénom').textContent,
+            nom: I.querySelector('nom').textContent,
+            photo: I.querySelector('photo').textContent,
+            adresse: this.getAdressFrom(I),
+            patients: []
+          }));
 
-    // default cabinet
-    const cabinet: CabinetInterface = {
-      infirmiers: [],
-      patientsNonAffectes: [],
-      adresse: this.getAdressFrom( doc.querySelector( 'cabinet' ) )
-    };
+          // 2 tableau des patients
+          const patientsXML = Array.from(this.document.querySelectorAll('patients > patient'));
+          const patients: PatientInterface[] = patientsXML.map(P => ({
+            prenom: P.querySelector('prénom').textContent,
+            nom: P.querySelector('nom').textContent,
+            sexe: P.querySelector('sexe').textContent === 'M' ? sexeEnum.M : sexeEnum.F,
+            numeroSecuriteSociale: P.querySelector('numéro').textContent,
+            adresse: this.getAdressFrom(P)
+          }));
 
-    // 1 - tableau des infirmiers
-    const infirmiersXML =  Array.from( doc.querySelectorAll( "infirmiers > infirmier" ) ); //transformer la NodeList en tableau pour le map
+          // 3 Tableau des affectations à faire.
+          const affectations = patientsXML.map((P, i) => {
+            const visiteXML = P.querySelector('visite[intervenant]');
+            let infirmier: InfirmierInterface = null;
+            if (visiteXML !== null && visiteXML.getAttribute('intervenant') !== '') {
+              infirmier = this.cabinet.infirmiers.find(I => I.id === visiteXML.getAttribute('intervenant'));
+            }
+            return {patient: patients[i], infirmier: infirmier};
+          });
 
-    cabinet.infirmiers = infirmiersXML.map( I => ({
-      id      : I.getAttribute("id"),
-      prenom  : I.querySelector("prénom").textContent,
-      nom     : I.querySelector("nom"   ).textContent,
-      photo   : I.querySelector("photo" ).textContent,
-      adresse : this.getAdressFrom(I),
-      patients: []
-    }) );
-
-    // 2 tableau des patients
-    const patientsXML  = Array.from( doc.querySelectorAll( "patients > patient" ) );
-    const patients: PatientInterface[] = patientsXML.map( P => ({
-      prenom: P.querySelector("prénom").textContent,
-      nom: P.querySelector("nom").textContent,
-      sexe: P.querySelector("sexe").textContent === "M" ? sexeEnum.M : sexeEnum.F,
-      numeroSecuriteSociale: P.querySelector("numéro").textContent,
-      adresse: this.getAdressFrom( P )
-    }) );
-
-    // 3 Tableau des affectations à faire.
-    const affectations = patientsXML.map( (P, i) => {
-      const visiteXML = P.querySelector( "visite[intervenant]" );
-      let infirmier: InfirmierInterface = null;
-      if (visiteXML !== null) {
-        infirmier = cabinet.infirmiers.find( I => I.id === visiteXML.getAttribute("intervenant") );
-      }
-      return {patient: patients[i], infirmier: infirmier};
-    } );
-
-    // 4 Réaliser les affectations
-    affectations.forEach(({patient : P , infirmier : I }) => {
-      if(I!= null) I.patients.push (P);
-      else cabinet.patientsNonAffectes.push(P);
-    });
-
-    // Return the cabinet
-    return cabinet;
-
+          // 4 Réaliser les affectations
+          affectations.forEach(({patient: P, infirmier: I}) => {
+            if (I !== null) {
+              I.patients.push(P);
+            } else {
+              this.cabinet.patientsNonAffectes.push(P);
+            }
+          });
+          this.cabinet.patientsNonAffectes.map(p => {
+            //console.log('le patient non affecté: ' + p.nom);
+          });
+          resolve(this.cabinet);
+        }, rej => {
+          reject(rej);
+        }
+      );
+    }));
   }
 
   private getAdressFrom(root: Element): Adresse {
@@ -148,16 +146,4 @@ export class CabinetMedicalService {
       this.update_desaff.emit({p: pat, id: id}) ; }} );
 
   }
-
-  getEmitPat() {
-    return this.update_pat;
-  }
-  getEmitAff() {
-    return this.update_aff;
-  }
-  getEmitDesaff() {
-    return this.update_desaff;
-  }
-
-
 }
