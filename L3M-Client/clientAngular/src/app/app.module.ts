@@ -29,7 +29,8 @@ import {Panel, PanelModule} from "primeng/panel";
 import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import {DataTableModule} from "primeng/primeng";
-
+import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +39,9 @@ import {DataTableModule} from "primeng/primeng";
     PatientsComponent,
     InfirmiersComponent,
     AjoutPatientComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

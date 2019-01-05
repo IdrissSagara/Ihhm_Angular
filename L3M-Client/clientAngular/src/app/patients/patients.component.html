@@ -1,26 +1,30 @@
-<!--<script>-->
-<!--function openDialogs() {-->
-<!--var person = prompt("Please enter your name", "Harry Potter");-->
-<!--}-->
-<!--</script>-->
+<div class="container">
+<mat-card class="ui-g" style="background-color: beige">
+  <div class="ui-g-8 ui-md-5 ui-md-offset-1" >
+    <div class="ui-g">
+      <div class="ui-g-2 ui-sm-6">Nom: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getNom()}}</b></div>
+      <div class="ui-g-2 ui-sm-6">Prenom: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getPrenom()}}</b></div>
+      <div class="ui-g-2 ui-sm-6">Sexe: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getSexe() === enumM ? "M" : "F"}}</b></div>
+      <div class="ui-g-5 ui-sm-6">Num Securité sociale: </div>
+      <div class="ui-g-5 ui-sm-6"><b>{{getNum()}}</b></div>
+      <div class="ui-g-3 ui-sm-6">Adress: </div>
+      <div class="ui-g-7 ui-sm-6"><b>{{getAdresse()}}</b></div>
+    </div>
+  </div>
 
-
-
-<mat-card>
-  <b>Nom:</b>{{getNom()}}<br/>
-  <b>Prenom:</b>{{getPrenom()}}<br/>
-  <b>Sexe:</b>{{getSexe() === enumM ? "M" : "F"}}<br/>
-  <b>Num Securité sociale:</b>{{getNum()}}<br/>
-  <b>Adresse:</b>{{getAdresse()}}<br/>
-
-
+  <div class="ui-g-8 ui-md-4 ui-md-offset-1">
+    <b style="color: darkslateblue"><u>Affectation d'un patient</u></b><br/><br/>
   <mat-form-field>
     <mat-select placeholder="Choisir infirmier" [(ngModel)]="selectedValue" >
       <mat-option *ngFor="let inf of infirmiers" [value]="inf.id">
         {{ inf.nom }} : {{inf.id}}
       </mat-option>
     </mat-select>
-  </mat-form-field>
+  </mat-form-field><br/>
   <button mat-raised-button color="primary" (click) ="service_affecter(selectedValue)">Affecter à {{selectedValue}}  </button>
-
+  </div>
 </mat-card>
+</div>
