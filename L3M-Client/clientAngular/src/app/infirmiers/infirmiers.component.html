@@ -1,19 +1,31 @@
-<mat-card>
-  <img aligne="center" src ='{{getPhotoURL()}}' style="width: 5%"  /> <br/>
-  <b>Id: </b>{{getId()}}<br/>
-  <b>Nom:</b>{{getNom()}}<br/>
-  <b>Prenom:</b>{{getPrenom()}}<br/>
-
-  <b>Adresse:</b>{{getAdresse()}}<br/>
-
-  <b>Patient affectés:</b><br/>
+<div class="container">
+  <div class="ui-g" style="background-color: beige">
+    <div class="ui-g-12 ui-md-3" style="text-align:center">
+      <img aligne="center" src ='{{getPhotoURL()}}' style="width: 30%"  /> <br/>
+    </div>
+  <div class="ui-g-12 ui-md-5 car-details" >
+    <div class="ui-g">
+      <div class="ui-g-2 ui-sm-6">Id: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getId()}}</b></div>
+      <div class="ui-g-2 ui-sm-6">Nom: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getNom()}}</b></div>
+      <div class="ui-g-2 ui-sm-6">Prenom: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getPrenom()}}</b></div>
+      <div class="ui-g-2 ui-sm-6">Adress: </div>
+      <div class="ui-g-10 ui-sm-6"><b>{{getAdresse()}}</b></div>
+    </div>
+  </div>
+    <div class="ui-g-12 ui-md-3 "*ngIf="infirmier.patients.length != 0">
+      <b style="color: darkslateblue"><u>Patients affectés</u></b><br/><br/>
   <table>
     <tr *ngFor= "let c of getPatients() ">
       <th>{{ getPresenter(c) }}    </th>
       <th><button mat-raised-button color="primary" (click)="service_desaffecter(c)" >désaffecter</button></th>
     </tr>
   </table>
-</mat-card>
+    </div>
+  </div>
+</div>
 
 
 

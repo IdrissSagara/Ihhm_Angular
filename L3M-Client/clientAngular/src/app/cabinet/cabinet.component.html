@@ -3,8 +3,8 @@
     <h3>1) Tableau des patients</h3>
   </div>
 </div>
-<p-dataTable [value]="cabinet?.patientsNonAffectes" emptyMessage="Aucun patient à afficher" [paginator]="true"
-             [rows]="20"  [responsive]="true">
+<p-dataTable [value]="cabinet?.patientsNonAffectes" emptyMessage="Aucun patient à afficher"
+             [rows]="20"  [responsive]="true" >
   <p-column field="nom" header="Nom" styleClass="text-center"
             [sortable]="true">
   </p-column>
