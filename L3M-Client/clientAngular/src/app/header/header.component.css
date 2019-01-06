@@ -4,6 +4,21 @@
   margin-left: 500px;
 }
 #Titre{
-
-
+font-weight: bold;
+  font-family: American Typewriter;
+}
+.avbar-brand{
+  font-weight: bold;
+}
+.menu{
+  background-color: beige;
+}
+#sec{
+  font-weight: bold;
+}
+#ajout{
+  font-weight: bold;
+}
+#inf{
+  font-weight: bold;
 }

@@ -1,6 +1,7 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+<div class="">
 <form [formGroup]="myForm" class="full">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border"><b>Formulaire D'ajout Patient</b></legend>
   <mat-grid-list cols="2" rowHeight="300px">
     <mat-grid-tile>
   <div class="container-controles">
@@ -23,7 +24,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-select #sexe placeholder="Sexe">
-        <mat-option value="H">Homme</mat-option>
+        <mat-option value="M">Homme</mat-option>
         <mat-option value="F">Femme</mat-option>
       </mat-select>
     </mat-form-field>
@@ -38,7 +39,7 @@
       <div class="container-controles">
         <mat-form-field class="full">
           <input type="number" matInput formControlName="numSecu"
-          placeholder="Numéro secuté sociale" #numSecu>
+          placeholder="Numéro sécurité sociale" #numSecu/>
         </mat-form-field>
       <mat-form-field class="full">
         <input type="number" matInput formControlName="numero"
@@ -59,10 +60,13 @@
       </div>
     </mat-grid-tile>
   </mat-grid-list>
-  
-  <button mat-raised-button color="primary" value="ajouter" [disabled]="myForm.invalid"
-          (click)="ajoutPatient(nom.value,prenom.value,numSecu.value,sexe.value,naissance._datepickerInput.value,Etage.value,Num.value,Rue.value,CP.value,ville.value)">Ajouter
-  </button>
-
+  <div id="gBtn">
+    <button class="ajoutBouton" mat-raised-button color="primary" value="ajouter" [disabled]="myForm.invalid"
+            (click)="ajoutPatient(nom.value,prenom.value,numSecu.value,sexe.value,naissance._datepickerInput.value,Etage.value,Num.value,Rue.value,CP.value,ville.value)">Ajouter
+    </button>
+    <button mat-raised-button color="warn" class="warnBouton" (click)="efface()">Effacer</button>
+  </div>
+  </fieldset>
 </form>
+</div>
 

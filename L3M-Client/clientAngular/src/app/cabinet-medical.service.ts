@@ -108,7 +108,7 @@ export class CabinetMedicalService {
     const current_pat: PatientInterface = {
       prenom: prenom,
       nom: nom,
-      sexe:  sexe === 'H' ? sexeEnum.M : sexeEnum.F,
+      sexe:  sexe === 'M' ? sexeEnum.M : sexeEnum.F,
       numeroSecuriteSociale: numSec,
       adresse: current_adresse
     }
@@ -118,7 +118,7 @@ export class CabinetMedicalService {
       patientName: nom,
       patientForname: prenom,
       patientNumber: numSec,
-      patientSex: sexe === 'H' ? sexeEnum.M : sexeEnum.F,
+      patientSex: sexe === 'M' ? sexeEnum.M : sexeEnum.F,
       patientBirthday: date,
       patientFloor: etage,
       patientStreetNumber: numero,

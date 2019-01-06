@@ -1,10 +1,10 @@
 <div >
-  <div class="col-md-6">
-    <h3>1) Tableau des patients</h3>
+  <div class="title1">
+    <h3><b> Tableau des patients</b></h3>
   </div>
 </div>
 <p-dataTable [value]="cabinet?.patientsNonAffectes" emptyMessage="Aucun patient à afficher"
-             [rows]="20"  [responsive]="true" >
+             [rows]="10"  [responsive]="true" >
   <p-column field="nom" header="Nom" styleClass="text-center"
             [sortable]="true">
   </p-column>
@@ -16,11 +16,11 @@
             [sortable]="true"></p-column>
 </p-dataTable>
 <hr/>
-<div class="col-md-6">
-  <h3>2) Tableau des infirmiers</h3>
+<div class="title2">
+  <h3><b>Tableau des infirmiers</b></h3>
 </div>
-<p-dataTable [value]="cabinet?.infirmiers" emptyMessage="Aucun patient à afficher" [paginator]="true"
-             [rows]="20"  [responsive]="true">
+<p-dataTable [value]="cabinet?.infirmiers" emptyMessage="Aucun patient à afficher"
+             [rows]="10"  [responsive]="true" >
   <p-column field="id" header="Identifiant" styleClass="text-center"
             [sortable]="true"></p-column>
   <p-column field="nom" header="Nom" styleClass="text-center"

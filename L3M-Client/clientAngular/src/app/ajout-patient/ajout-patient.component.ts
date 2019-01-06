@@ -45,7 +45,6 @@ myForm: FormGroup;
   }
   ajoutPatient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string){
     this.cabinetService.ajouter_patient(nom, prenom, numSec, sexe, date, etage, numero, rue, codePostal, ville);
-    this.addEvent.emit();
     this.toastr.success('à été crée avec succès', 'Le patient')
     console.log("Ajout avec succes");
   }
@@ -55,5 +54,22 @@ myForm: FormGroup;
   get prenom() {
     return this.myForm.get('prenom');
   }
-
+  efface() {
+    this.myForm.reset();
+    this.intialisationFormulaire();
+}
+private intialisationFormulaire() {
+    this.myForm.setValue({
+      nom: '',
+      prenom: '',
+      numSecu: '',
+      sexe: null,
+      naissance: '',
+      Etage: '',
+      Num: '',
+      Rue: '',
+      CP: '',
+      ville: '',
+    });
+}
 }
