@@ -1,0 +1,25 @@
+
+<div *ngIf="isLoggedIn$ | async">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" id="Titre" >Cabinet Medical</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+
+        <li class="nav-item">
+          <button mat-button>
+            <a class="nav-link" routerLink="secretary">Secretaire</a></button>
+        </li>
+        <li class="nav-item">
+          <button mat-button>
+            <a class="nav-link" routerLink="ajout-patient">Ajout Patient</a></button>
+        </li>
+        <li class="nav-item">
+          <button mat-button>
+            <a class="nav-link" routerLink="cabinet">Infirmier & Patient</a></button>
+        </li>
+      </ul>
+      <button mat-button (click)="onLogout()" id="btn">Deconexion</button>
+    </div>
+  </nav>
+</div>

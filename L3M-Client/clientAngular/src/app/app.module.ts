@@ -26,11 +26,13 @@ import {routes} from './app.routing';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DataViewModule} from 'primeng/dataview';
 import {Panel, PanelModule} from "primeng/panel";
-import { HomeComponent } from './home/home.component';
 import { ToastrModule } from 'ngx-toastr';
 import {DataTableModule} from "primeng/primeng";
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HeaderComponent } from './header/header.component';
+import {AuthService} from "./auth/auth.service";
+import {AuthGuard} from "./auth/auth.guard";
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +41,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     PatientsComponent,
     InfirmiersComponent,
     AjoutPatientComponent,
-    HomeComponent,
     LoginComponent,
     PageNotFoundComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ToastrModule.forRoot(),
   ],
   exports: [],
-  providers: [],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
