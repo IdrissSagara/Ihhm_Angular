@@ -8,7 +8,7 @@ import {
   MatDatepickerModule, MatDialogModule,
   MatFormFieldModule, MatGridListModule,
   MatInputModule, MatListModule,
-  MatMenuModule, MatNativeDateModule,
+  MatMenuModule, MatNativeDateModule, MatRadioButton, MatRadioGroup, MatRadioModule,
   MatSelectModule, MatTab, MatTabGroup, MatTableModule, MatTabsModule
 } from '@angular/material';
 import {MatIconModule} from '@angular/material';
@@ -27,12 +27,13 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DataViewModule} from 'primeng/dataview';
 import {Panel, PanelModule} from "primeng/panel";
 import { ToastrModule } from 'ngx-toastr';
-import {DataTableModule} from "primeng/primeng";
+import {DataTableModule, DialogModule} from "primeng/primeng";
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
 import {AuthService} from "./auth/auth.service";
 import {AuthGuard} from "./auth/auth.guard";
+import { PatientDialogComponent } from './patient-dialog/patient-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import {AuthGuard} from "./auth/auth.guard";
     LoginComponent,
     PageNotFoundComponent,
     HeaderComponent,
+    PatientDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,9 +56,9 @@ import {AuthGuard} from "./auth/auth.guard";
     MatNativeDateModule, MatDialogModule, MatToolbarModule,
     MatMenuModule, MatSelectModule, MatDatepickerModule,
     MatIconModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule, MatCheckboxModule, MatToolbarModule ,
+    MatButtonModule, MatCheckboxModule, MatToolbarModule , MatRadioModule,
     FormsModule, ReactiveFormsModule,
-    DataViewModule, PanelModule, DataTableModule,
+    DataViewModule, PanelModule, DataTableModule, DialogModule,
     RouterModule.forRoot(routes),
     ToastrModule.forRoot(),
   ],

@@ -14,7 +14,21 @@
             [sortable]="true"></p-column>
   <p-column field="adresse.ville" header="Adresse" styleClass="text-center"
             [sortable]="true"></p-column>
+  <p-column header="Actions" styleClass="text-center">
+    <ng-template pTemplate="body" let-patient="rowData">
+      <div class="btn-group">
+        <button type="button" class="btn btn-white btn-sm"
+        (click)="afficherDialogModif(patient)"><i class="fa fa-pencil"></i>
+        </button>
+      </div>
+
+    </ng-template>
+  </p-column>
 </p-dataTable>
+<app-patient-dialog *ngIf="afficherDialogPatient"
+                    [patient]="patientSelectionner" [afficherDialog]="afficherDialogPatient"
+                    (onDialogHide)="onDialogHideOperation()">
+</app-patient-dialog>
 <hr/>
 <div class="title2">
   <h3><b>Tableau des infirmiers</b></h3>

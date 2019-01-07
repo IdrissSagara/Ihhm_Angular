@@ -95,6 +95,29 @@ export class CabinetMedicalService {
       etage       : (node = root.querySelector("adresse > étage")     ) ? node.textContent                    : "",
     };
   }
+  public async addPatient(patient: PatientInterface): Promise<PatientInterface> {
+    const res = await this.http.post('/addPatient', {
+      patientName: patient.nom,
+      patientForname: patient.prenom,
+      patientNumber: patient.numeroSecuriteSociale,
+      patientSex: patient.sexe === sexeEnum.M ? 'M' : 'F',
+      patientBirthday: 'AAAA-MM-JJ',
+      patientFloor: patient.adresse.etage,
+      patientStreetNumber: patient.adresse.numero,
+      patientStreet: patient.adresse.rue,
+      patientPostalCode: patient.adresse.codePostal,
+      patientCity: patient.adresse.ville
+    }, {observe: 'response'}).toPromise<HttpResponse<any>>();
+
+    // console.log('Add patient renvoie', res);
+    if (res.status === 200) {
+      // OK on peut ajouter en local
+      this.cabinet.patientsNonAffectes.push(patient);
+      return patient;
+    }
+    return null;
+  }
+
   ajouter_patient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string) {
 
     const current_adresse: Adresse = {

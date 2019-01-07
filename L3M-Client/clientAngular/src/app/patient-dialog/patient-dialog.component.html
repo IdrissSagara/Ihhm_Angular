@@ -1,0 +1,67 @@
+<p-dialog header="Dialog de Modification" [modal]="true" [resizable]="true"
+          [draggable]="true" styleClass="col-9"
+          [(visible)]="afficherDialog" (onHide)="onHide()" closable="true">
+  <form [formGroup]="myForm" class="full">
+    <mat-grid-list cols="2" rowHeight="300px">
+        <mat-grid-tile>
+          <div class="container-controles">
+            <mat-form-field class="full">
+              <input matInput placeholder="nom" formControlName="nom" #nom
+                   name="nom"  [(ngModel)]="patient.nom">
+            </mat-form-field>
+            <mat-form-field class="full">
+              <input matInput placeholder="prenom" formControlName="prenom" #prenom
+                     [(ngModel)]="patient.prenom" name="prenom">
+            </mat-form-field>
+            <mat-form-field class="full">
+              <input matInput placeholder="ville" formControlName="ville"
+                     #ville [(ngModel)]="patient.adresse.ville" name="ville">
+
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select #sexe placeholder="Sexe" [(ngModel)]="patient.sexe" name="sexe">
+                <mat-option *ngFor="let sexe of patient.sexe" [value]="sexe.value">{{sexe.viewValue}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput [matDatepicker]="naissance" placeholder="Date de naissance"
+                     >
+              <mat-datepicker-toggle matSuffix [for]="naissance"></mat-datepicker-toggle>
+              <mat-datepicker #naissance></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="container-controles">
+            <mat-form-field class="full">
+              <input type="number" matInput formControlName="numSecu" [(ngModel)]="patient.numeroSecuriteSociale"
+                     placeholder="Numéro sécurité sociale" #numSecu name="numeroSecuriteSociale"/>
+            </mat-form-field>
+            <mat-form-field class="full">
+              <input type="number" matInput formControlName="numero" [(ngModel)]="patient.adresse.numero"
+                     placeholder="Numéro de téléphone" #Num name="numero">
+            </mat-form-field>
+            <mat-form-field class="full">
+              <input type="number" matInput formControlName="codePostal" [(ngModel)]="patient.adresse.codePostal"
+                     placeholder="Code postal" #CP name="codePostal">
+            </mat-form-field>
+            <mat-form-field class="full">
+              <input type="number" matInput formControlName="rue" [(ngModel)]="patient.adresse.rue"
+                     placeholder="Rue" #Rue name="rue">
+            </mat-form-field>
+            <mat-form-field class="full">
+              <input type="number" matInput formControlName="etage" [(ngModel)]="patient.adresse.etage"
+                     placeholder="Etage" #Etage name="etage">
+            </mat-form-field>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <div id="gBtn">
+
+        <button class="ajoutBouton" mat-raised-button color="primary" value="ajouter" [disabled]="myForm.invalid"
+                (click)="ajoutPatient(patient.numeroSecuriteSociale)">Modifier
+        </button>
+        <button mat-raised-button color="warn" class="warnBouton" (click)="annuler()">Annuler</button>
+      </div>
+  </form>
+</p-dialog>
