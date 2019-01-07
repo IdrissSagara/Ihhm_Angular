@@ -21,7 +21,7 @@ export class PatientsComponent implements OnInit {
   selectedValue: string;
   private enumM = sexeEnum.M;
 
-  constructor(private cabinetMedicalService: CabinetMedicalService, private toastr: ToastrService)  {
+  constructor(private cabinetMedicalService: CabinetMedicalService, private toastr: ToastrService) {
   }
 
   getNom() {
@@ -45,7 +45,7 @@ export class PatientsComponent implements OnInit {
   }
 
 
-  service_affecter(id: string){
+  service_affecter(id: string) {
     this.cabinetMedicalService.affectation(this.patient, id).then(p => {
       if (p !== null) {
         this.affEmitter.emit(this.patient);

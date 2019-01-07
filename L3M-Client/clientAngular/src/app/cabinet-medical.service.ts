@@ -1,12 +1,12 @@
-
-import { Adresse } from './dataInterfaces/adresse';
-import { InfirmierInterface } from './dataInterfaces/infirmier';
+import {Adresse} from './dataInterfaces/adresse';
+import {InfirmierInterface} from './dataInterfaces/infirmier';
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import { CabinetInterface } from './dataInterfaces/cabinet';
-import { PatientInterface } from './dataInterfaces/patient';
-import { sexeEnum } from './dataInterfaces/sexe';
-import { ToastrService } from 'ngx-toastr';
+import {CabinetInterface} from './dataInterfaces/cabinet';
+import {PatientInterface} from './dataInterfaces/patient';
+import {sexeEnum} from './dataInterfaces/sexe';
+import {ToastrService} from 'ngx-toastr';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -88,13 +88,14 @@ export class CabinetMedicalService {
   private getAdressFrom(root: Element): Adresse {
     let node: Element;
     return {
-      ville       : (node = root.querySelector("adresse > ville")     ) ? node.textContent                    : "",
-      codePostal  : (node = root.querySelector("adresse > codePostal")) ? parseInt(node.textContent, 10) : 0,
-      rue         : (node = root.querySelector("adresse > rue")       ) ? node.textContent                    : "",
-      numero      : (node = root.querySelector("adresse > numéro")    ) ? node.textContent                    : "",
-      etage       : (node = root.querySelector("adresse > étage")     ) ? node.textContent                    : "",
+      ville: (node = root.querySelector("adresse > ville")) ? node.textContent : "",
+      codePostal: (node = root.querySelector("adresse > codePostal")) ? parseInt(node.textContent, 10) : 0,
+      rue: (node = root.querySelector("adresse > rue")) ? node.textContent : "",
+      numero: (node = root.querySelector("adresse > numéro")) ? node.textContent : "",
+      etage: (node = root.querySelector("adresse > étage")) ? node.textContent : "",
     };
   }
+
   public async addPatient(patient: PatientInterface): Promise<PatientInterface> {
     const res = await this.http.post('/addPatient', {
       patientName: patient.nom,
@@ -121,17 +122,17 @@ export class CabinetMedicalService {
   ajouter_patient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string) {
 
     const current_adresse: Adresse = {
-      numero : numero,
-      rue : rue,
-      codePostal : codePostal,
-      ville : ville,
-      etage : etage,
+      numero: numero,
+      rue: rue,
+      codePostal: codePostal,
+      ville: ville,
+      etage: etage,
     }
 
     const current_pat: PatientInterface = {
       prenom: prenom,
       nom: nom,
-      sexe:  sexe === 'M' ? sexeEnum.M : sexeEnum.F,
+      sexe: sexe === 'M' ? sexeEnum.M : sexeEnum.F,
       numeroSecuriteSociale: numSec,
       adresse: current_adresse
     }
@@ -148,7 +149,11 @@ export class CabinetMedicalService {
       patientStreet: rue,
       patientPostalCode: codePostal,
       patientCity: ville
-    }).subscribe( response => {if (response) { this.update_pat.emit(current_pat); }});
+    }).subscribe(response => {
+      if (response) {
+        this.update_pat.emit(current_pat);
+      }
+    });
 
   }
 
@@ -163,6 +168,7 @@ export class CabinetMedicalService {
     }
     return null;
   }
+
   public async affectation(patient: PatientInterface, infirmierId: string): Promise<PatientInterface> {
     const res = await this.http.post('/affectation', {
       infirmier: infirmierId,

@@ -12,13 +12,17 @@ import {Router} from "@angular/router";
   styleUrls: ['./ajout-patient.component.css']
 })
 export class AjoutPatientComponent implements OnInit {
-myForm: FormGroup;
-F = sexeEnum.F;
-M = sexeEnum.M;
-
+  myForm: FormGroup;
+  patient: PatientInterface;
+  "F" = sexeEnum.F;
+  "M" = sexeEnum.M;
+  sexe: string;
   @Output() addEvent: EventEmitter<any> = new EventEmitter();
+
   constructor(private fb: FormBuilder, private cabinetService: CabinetMedicalService,
-              private toastr: ToastrService, private router: Router) { }
+              private toastr: ToastrService, private router: Router) {
+  }
+
   ngOnInit() {
     this.myForm = this.fb.group({
       nom: ['', [
@@ -47,23 +51,28 @@ M = sexeEnum.M;
       ]],
     });
   }
-  ajoutPatient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string){
+
+  ajoutPatient(nom: string, prenom: string, numSec: string, sexe: string, date: string, etage: string, numero: string, rue: string, codePostal: number, ville: string) {
     this.cabinetService.ajouter_patient(nom, prenom, numSec, sexe, date, etage, numero, rue, codePostal, ville);
     this.toastr.success('à été crée avec succès', 'Le patient')
     this.router.navigateByUrl('secretary');
     console.log("Ajout avec succes");
   }
+
   get nom() {
     return this.myForm.get('nom');
   }
+
   get prenom() {
     return this.myForm.get('prenom');
   }
+
   efface() {
     this.myForm.reset();
     this.intialisationFormulaire();
-}
-private intialisationFormulaire() {
+  }
+
+  private intialisationFormulaire() {
     this.myForm.setValue({
       nom: '',
       prenom: '',
@@ -76,5 +85,5 @@ private intialisationFormulaire() {
       CP: '',
       ville: '',
     });
-}
+  }
 }

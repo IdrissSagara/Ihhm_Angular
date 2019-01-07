@@ -16,22 +16,25 @@ export class PatientDialogComponent implements OnInit {
   myForm: FormGroup;
   M = sexeEnum.M;
   F = sexeEnum.F;
-@Input() patient: PatientInterface;
+  @Input() patient: PatientInterface;
 
-@Input() afficherDialog = false;
+  @Input() afficherDialog = false;
 
-@Output() patientCreeAvecSucces = new EventEmitter<PatientInterface>(true);
+  @Output() patientCreeAvecSucces = new EventEmitter<PatientInterface>(true);
 
-@Output() onDialogHide = new EventEmitter(true);
+  @Output() onDialogHide = new EventEmitter(true);
 
-titreDialog: 'Formulaire Patient';
+  titreDialog: 'Formulaire Patient';
 
-onHide(): void {
-  this.onDialogHide.emit();
-  this.afficherDialog = false;
-}
+  onHide(): void {
+    this.onDialogHide.emit();
+    this.afficherDialog = false;
+  }
+
   constructor(private fb: FormBuilder, private cabinetService: CabinetMedicalService,
-              private toastr: ToastrService, private router: Router) { }
+              private toastr: ToastrService, private router: Router) {
+  }
+
   ngOnInit() {
     this.myForm = this.fb.group({
       nom: ['', [
@@ -60,22 +63,22 @@ onHide(): void {
       ]],
     });
   }
+
   ajoutPatient(patient: PatientInterface) {
-  this.cabinetService.addPatient(this.patient).then((p) => {
-    if (p !== null) {
-      this.afficherDialog = false;
-      this.toastr.success('Patient Modifier');
-    } else {
-      this.toastr.error('Erreur lors de la modification ');
-    }
-  });
+    this.cabinetService.addPatient(this.patient).then((p) => {
+      if (p !== null) {
+        this.afficherDialog = false;
+        this.toastr.success('Patient Modifier');
+      } else {
+        this.toastr.error('Erreur lors de la modification ');
+      }
+    });
   }
 
 
   annuler() {
-  this.afficherDialog = false;
+    this.afficherDialog = false;
   }
-
 
 
 }
