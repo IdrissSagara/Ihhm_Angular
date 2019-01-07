@@ -1,3 +1,13 @@
+`Sagara Idriss `
+
+mail1:` idriss.sagara@etu.univ-grenoble-alpes.fr`
+
+mail2: `sagara.idriss@gmail.com`
+
+binome
+`mourthadhoi sultan`
+
+mail:`sultan.mourthadhoi@etu.univ-grenoble-alpes.fr`
 #Voyageur de santé 
 
 Partie frontend du projet Voyageur de santé.
